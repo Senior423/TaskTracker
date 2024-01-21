@@ -31,3 +31,6 @@ function createInput(className, type, placeholder) {
 controlForm.append(createInput('control__input-add', 'input', 'Описание задачи'))
 controlForm.append(createButton('control__button-submit', 'submit', 'Добавить'))
 
+const taskList = document.createElement('div')
+taskList.classList.add('task__list')
+root.append(taskList)
