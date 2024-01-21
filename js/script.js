@@ -5,9 +5,10 @@ const control = document.createElement('div')
 control.classList.add('control')
 root.append(control)
 
-const form = document.createElement('form')
-form.method = 'get'
-control.append(form)
+const controlForm = document.createElement('form')
+controlForm.classList.add('control__form')
+controlForm.method = 'get'
+control.append(controlForm)
 
 function createButton(className, type, text) {
     const button = document.createElement('button')
@@ -17,7 +18,7 @@ function createButton(className, type, text) {
     return button
 }
 
-form.append(createButton('control__delete-all', 'button', 'Удалить всё'))
+controlForm.append(createButton('control__delete-all', 'button', 'Удалить всё'))
 
 function createInput(className, type, placeholder) {
     const input = document.createElement('input')
@@ -27,6 +28,6 @@ function createInput(className, type, placeholder) {
     return input
 }
 
-form.append(createInput('control__input-add', 'input', 'Описание задачи'))
-form.append(createButton('control__button-submit', 'submit', 'Добавить'))
+controlForm.append(createInput('control__input-add', 'input', 'Описание задачи'))
+controlForm.append(createButton('control__button-submit', 'submit', 'Добавить'))
 
