@@ -24,6 +24,10 @@ button:active {
     padding: 20px;
 }
 
+.control {
+    margin-bottom: 15px;
+}
+
 .control__form {
     display: grid;
     grid-template-columns: 130px 200px 130px;
@@ -42,4 +46,10 @@ button:active {
 
 .control__input-add:focus {
     border-bottom: 1px solid #000000;
+}
+
+.task__list {
+    height: 350px;
+    overflow: auto;
+    overflow-y: hidden;
 }
