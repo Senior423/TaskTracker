@@ -2,6 +2,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Montserrat', sans-serif;
 }
 
 button {
@@ -76,6 +77,7 @@ button:active {
 
 .task__checkbox:checked ~ .task__description {
     background-color: #00000010;
+    text-decoration: line-through;
 }
 
 .task__date {
