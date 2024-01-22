@@ -1,6 +1,6 @@
 "use strict"
 
-const todos = [{id: '11111', date: '19:35 17 sept', text: 'Play video games', isChecked: true},{id: '22222', date: '19:35 17 sept', text: 'Play video games', isChecked: false}]
+let todos = JSON.parse(localStorage.getItem('todos')) || []
 
 const root = document.getElementById('root')
 const control = document.createElement('div')
@@ -22,16 +22,48 @@ function createButton(className, type, text) {
 
 controlForm.append(createButton('control__delete-all', 'button', 'Удалить всё'))
 
-function createInput(className, type, placeholder) {
-    const input = document.createElement('input')
-    input.className = className
-    input.type = type
-    input.placeholder = placeholder
-    return input
+const inputAdd = document.createElement('input')
+inputAdd.classList.add('control__input-add')
+inputAdd.type = 'input'
+inputAdd.placeholder = 'Удалить всё'
+controlForm.append(inputAdd)
+
+const buttonSubmit = document.createElement('button')
+buttonSubmit.className = 'control__button-submit'
+buttonSubmit.type = 'input'
+buttonSubmit.textContent = 'Описание задачи'
+controlForm.append(buttonSubmit)
+
+function corectedDate(value) {
+    return value < 10 ? '0' + value : value
 }
 
-controlForm.append(createInput('control__input-add', 'input', 'Описание задачи'))
-controlForm.append(createButton('control__button-submit', 'submit', 'Добавить'))
+function getDate() {
+    const currentDAte = new Date()
+    const hours = corectedDate(currentDAte.getHours())
+    const minutes = corectedDate(currentDAte.getMinutes())
+    const second = corectedDate(currentDAte.getSeconds())
+    const day = corectedDate(currentDAte.getDate())
+    const months = ["янв", "фев", "мар", "апр", "май", "июн", "июл", "авг", "сен", "окт", "ноя", "дек"]
+    const monthIndex = currentDAte.getMonth()
+    const month = months[monthIndex]
+    return `${hours}:${minutes}:${second} ${day} ${month}`
+}
+
+function generateId() {
+    const id = String(Math.random())
+    return id.slice(-5)
+}
+
+function createTask(event) {
+    event.preventDefault()
+    todos.push({id: generateId(), date: getDate(), text: inputAdd.value})
+    localStorage.setItem('todos', JSON.stringify(todos))
+    inputAdd.value = ''
+    renderTask()
+}
+
+buttonSubmit.addEventListener('click', (event) => createTask(event))
 
 const taskList = document.createElement('div')
 taskList.classList.add('task__list')
@@ -41,7 +73,7 @@ function renderTask() {
     taskList.innerHTML = ''
     if (todos.length > 0) {
         todos.forEach(({id, date, text, isChecked}) => createTaskCard({id, date, text, isChecked}))
-    } 
+    }
 }
 
 function createTaskCard({id, date, text, isChecked}) {
@@ -66,6 +98,7 @@ function examChecked(checkbox, id) {
     for (let i = 0; i < todos.length; i++) {
         if (todos[i].id === id) {
             todos[i].isChecked = checkbox.checked
+            localStorage.setItem('todos', JSON.stringify(todos))
             break
         }
     }
@@ -78,6 +111,17 @@ function createText({id, date, text}, taskCard) {
     description.value = text
     taskCard.append(description)
     createDate({id, date}, taskCard)
+    description.addEventListener('input', () => selText(id, description))
+}
+
+function selText(id, description) {
+    for (let i = 0; i < todos.length; i++) {
+        if (todos[i].id === id) {
+            todos[i].text = description.value
+            localStorage.setItem('todos', JSON.stringify(todos))
+            break
+        }
+    }
 }
 
 function createDate({id, date}, taskCard) {
@@ -100,6 +144,7 @@ function taskDelete(id) {
         if (todos[i].id === id) {
             todos.splice(i, 1)
             renderTask()
+            localStorage.setItem('todos', JSON.stringify(todos))
             break
         }
     }

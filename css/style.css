@@ -51,5 +51,4 @@ button:active {
 .task__list {
     height: 350px;
     overflow: auto;
-    overflow-y: hidden;
 }
