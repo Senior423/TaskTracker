@@ -12,15 +12,22 @@ controlForm.classList.add('control__form')
 controlForm.method = 'get'
 control.append(controlForm)
 
-function createButton(className, type, text) {
-    const button = document.createElement('button')
-    button.className = className
-    button.type = type
-    button.textContent = text
-    return button
+const buttonDeleteAll = document.createElement('button')
+buttonDeleteAll.className = 'control__delete-all'
+buttonDeleteAll.type = 'button'
+buttonDeleteAll.textContent = 'Удалить всё'
+controlForm.append(buttonDeleteAll)
+
+function deleteAll() {
+    const confirmation = confirm('Вы уверены, что хотите удалить все задачи?')
+    if (confirmation) {
+        localStorage.setItem('todos', JSON.stringify([]))
+        taskList.innerHTML = ''
+        todos = []
+    }
 }
 
-controlForm.append(createButton('control__delete-all', 'button', 'Удалить всё'))
+buttonDeleteAll.addEventListener('click', () => deleteAll())
 
 const inputAdd = document.createElement('input')
 inputAdd.classList.add('control__input-add')
@@ -57,10 +64,12 @@ function generateId() {
 
 function createTask(event) {
     event.preventDefault()
-    todos.push({id: generateId(), date: getDate(), text: inputAdd.value})
-    localStorage.setItem('todos', JSON.stringify(todos))
-    inputAdd.value = ''
-    renderTask()
+    if (inputAdd.value) {
+        todos.push({id: generateId(), date: getDate(), text: inputAdd.value})
+        localStorage.setItem('todos', JSON.stringify(todos))
+        inputAdd.value = ''
+        renderTask()
+    }
 }
 
 buttonSubmit.addEventListener('click', (event) => createTask(event))
@@ -140,12 +149,15 @@ function createButtonDelete(id, taskCard) {
 }
 
 function taskDelete(id) {
-    for (let i = 0; i < todos.length; i++) {
-        if (todos[i].id === id) {
-            todos.splice(i, 1)
-            renderTask()
-            localStorage.setItem('todos', JSON.stringify(todos))
-            break
+    const confirmation = confirm('Вы уверены, что хотите удалить эту задачу?')
+    if (confirmation) {
+        for (let i = 0; i < todos.length; i++) {
+            if (todos[i].id === id) {
+                todos.splice(i, 1)
+                renderTask()
+                localStorage.setItem('todos', JSON.stringify(todos))
+                break
+            }
         }
     }
 }
