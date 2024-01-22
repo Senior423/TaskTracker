@@ -52,3 +52,37 @@ button:active {
     height: 350px;
     overflow: auto;
 }
+
+.task__list::-webkit-scrollbar {
+    width: 0.1em;
+}
+
+.task__card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.task__checkbox {
+    accent-color: #747474;
+    margin-right: 10px;
+}
+
+.task__description {
+    width: 350px;
+    margin-right: 10px;
+    border: 0;
+}
+
+.task__checkbox:checked ~ .task__description {
+    background-color: #00000010;
+}
+
+.task__date {
+    margin-right: 12px;
+}
+
+.task__button-delete {
+    border: 0;
+}
+
