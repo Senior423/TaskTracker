@@ -32,13 +32,13 @@ buttonDeleteAll.addEventListener('click', () => deleteAll())
 const inputAdd = document.createElement('input')
 inputAdd.classList.add('control__input-add')
 inputAdd.type = 'input'
-inputAdd.placeholder = 'Удалить всё'
+inputAdd.placeholder = 'Описание задачи'
 controlForm.append(inputAdd)
 
 const buttonSubmit = document.createElement('button')
 buttonSubmit.className = 'control__button-submit'
 buttonSubmit.type = 'input'
-buttonSubmit.textContent = 'Описание задачи'
+buttonSubmit.textContent = 'Добавить'
 controlForm.append(buttonSubmit)
 
 function corectedDate(value) {
