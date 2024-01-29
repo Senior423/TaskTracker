@@ -1,4 +1,4 @@
-import { taskList, todos } from "./script.js"
+import { taskList, todos } from "./main.js"
 
 export function renderTask() {
     taskList.innerHTML = ''
